@@ -10,7 +10,7 @@ use IllumaLaw\ContentSentinel\DTOs\GateResult;
 use IllumaLaw\ContentSentinel\DTOs\SentinelPayload;
 use Illuminate\Support\Str;
 
-class ProhibitedAdviceGate implements SentinelGate
+class ProhibitedPhrasesGate implements SentinelGate
 {
     /**
      * @param  array<string, mixed>  $config
@@ -19,6 +19,7 @@ class ProhibitedAdviceGate implements SentinelGate
 
     public function handle(SentinelPayload $payload, Closure $next): SentinelPayload
     {
+        /** @var iterable<string> $phrases */
         $phrases = $this->config['prohibited_phrases'] ?? [];
         $content = Str::lower($payload->getFullContent());
 
@@ -32,7 +33,7 @@ class ProhibitedAdviceGate implements SentinelGate
 
         if ($matched !== []) {
             $payload->addResult(new GateResult(
-                gate: 'prohibited_advice',
+                gate: 'prohibited_phrases',
                 passed: false,
                 severity: 'block',
                 message: 'Content contains prohibited phrases: '.implode(', ', $matched),
@@ -40,10 +41,10 @@ class ProhibitedAdviceGate implements SentinelGate
             ));
         } else {
             $payload->addResult(new GateResult(
-                gate: 'prohibited_advice',
+                gate: 'prohibited_phrases',
                 passed: true,
                 severity: 'info',
-                message: 'No prohibited advice phrases detected.',
+                message: 'No prohibited phrases detected.',
             ));
         }
 

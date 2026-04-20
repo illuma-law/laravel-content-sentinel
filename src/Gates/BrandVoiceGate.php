@@ -19,6 +19,7 @@ class BrandVoiceGate implements SentinelGate
 
     public function handle(SentinelPayload $payload, Closure $next): SentinelPayload
     {
+        /** @var iterable<string> $forbidden */
         $forbidden = $this->config['brand_forbidden_words'] ?? [];
         $content = Str::lower($payload->getFullContent());
 

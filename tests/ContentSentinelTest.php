@@ -5,13 +5,13 @@ declare(strict_types=1);
 use IllumaLaw\ContentSentinel\ContentSentinel;
 use IllumaLaw\ContentSentinel\DTOs\SentinelPayload;
 use IllumaLaw\ContentSentinel\Gates\BrandVoiceGate;
-use IllumaLaw\ContentSentinel\Gates\ProhibitedAdviceGate;
+use IllumaLaw\ContentSentinel\Gates\ProhibitedPhrasesGate;
 use Illuminate\Pipeline\Pipeline;
 
 it('runs the full pipeline', function () {
     $config = [
         'gates' => [
-            ProhibitedAdviceGate::class,
+            ProhibitedPhrasesGate::class,
             BrandVoiceGate::class,
         ],
         'prohibited_phrases' => ['guaranteed outcome'],
@@ -30,5 +30,5 @@ it('runs the full pipeline', function () {
     expect($result->passed)->toBeFalse()
         ->and($result->blocks)->toHaveCount(1)
         ->and($result->warnings)->toHaveCount(1)
-        ->and($result->gateResults)->toHaveKeys(['prohibited_advice', 'brand_voice']);
+        ->and($result->gateResults)->toHaveKeys(['prohibited_phrases', 'brand_voice']);
 });

@@ -19,6 +19,7 @@ class SensitiveTopicGate implements SentinelGate
 
     public function handle(SentinelPayload $payload, Closure $next): SentinelPayload
     {
+        /** @var iterable<string> $topics */
         $topics = $this->config['sensitive_topics'] ?? [];
         $content = Str::lower($payload->getFullContent());
 

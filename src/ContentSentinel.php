@@ -20,6 +20,7 @@ class ContentSentinel
 
     public function check(SentinelPayload $payload): SafeguardResult
     {
+        /** @var array<int, string> $gates */
         $gates = $this->config['gates'] ?? [];
 
         $resolvedGates = array_map(function (string $gateClass) {
@@ -30,6 +31,8 @@ class ContentSentinel
             ->send($payload)
             ->through($resolvedGates)
             ->thenReturn();
+
+        assert($resultPayload instanceof SentinelPayload);
 
         return $resultPayload->toSafeguardResult();
     }

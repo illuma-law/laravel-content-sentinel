@@ -1,11 +1,11 @@
 <?php
 
 declare(strict_types=1);
+
 use IllumaLaw\ContentSentinel\Gates\BrandVoiceGate;
 use IllumaLaw\ContentSentinel\Gates\DuplicateContentGate;
 use IllumaLaw\ContentSentinel\Gates\HallucinationGate;
-use IllumaLaw\ContentSentinel\Gates\JurisdictionTagGate;
-use IllumaLaw\ContentSentinel\Gates\ProhibitedAdviceGate;
+use IllumaLaw\ContentSentinel\Gates\ProhibitedPhrasesGate;
 use IllumaLaw\ContentSentinel\Gates\SensitiveTopicGate;
 
 return [
@@ -19,11 +19,10 @@ return [
     |
     */
     'gates' => [
-        ProhibitedAdviceGate::class,
+        ProhibitedPhrasesGate::class,
         BrandVoiceGate::class,
         DuplicateContentGate::class,
         SensitiveTopicGate::class,
-        JurisdictionTagGate::class,
         HallucinationGate::class,
     ],
 
@@ -34,20 +33,15 @@ return [
     */
 
     'prohibited_phrases' => [
-        // 'guaranteed outcome',
-        // 'we will win',
-        // '100% success',
+        // 'some prohibited phrase',
     ],
 
     'brand_forbidden_words' => [
         // 'cheap',
-        // 'free consultation',
     ],
 
     'sensitive_topics' => [
-        // 'minors',
         // 'violence',
-        // 'mental health',
     ],
 
     'duplicate_similarity_threshold' => 0.85,

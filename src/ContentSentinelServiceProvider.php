@@ -4,6 +4,9 @@ declare(strict_types=1);
 
 namespace IllumaLaw\ContentSentinel;
 
+use Illuminate\Contracts\Config\Repository;
+use Illuminate\Contracts\Foundation\Application;
+use Illuminate\Pipeline\Pipeline;
 use IllumaLaw\ContentSentinel\Contracts\FactChecker;
 use IllumaLaw\ContentSentinel\Contracts\RecentContentProvider;
 use Spatie\LaravelPackageTools\Package;
@@ -20,23 +23,38 @@ class ContentSentinelServiceProvider extends PackageServiceProvider
 
     public function registeringPackage(): void
     {
-        $this->app->singleton(ContentSentinel::class, function ($app) {
+        $this->app->singleton(ContentSentinel::class, function (Application $app) {
+            /** @var Repository $config */
+            $config = $app->make('config');
+
+            /** @var Pipeline $pipeline */
+            $pipeline = $app->make('pipeline');
+
+            /** @var array<string, mixed> $sentinelConfig */
+            $sentinelConfig = $config->get('content-sentinel', []);
+
             return new ContentSentinel(
-                config: $app['config']->get('content-sentinel', []),
-                pipeline: $app->make('pipeline'),
+                config: $sentinelConfig,
+                pipeline: $pipeline,
             );
         });
     }
 
     public function packageRegistered(): void
     {
-        $config = $this->app['config']->get('content-sentinel', []);
+        /** @var Repository $configRepository */
+        $configRepository = $this->app->make('config');
+
+        /** @var array<string, mixed> $config */
+        $config = (array) $configRepository->get('content-sentinel', []);
 
         if ($factChecker = ($config['fact_checker'] ?? null)) {
+            /** @var class-string|(\Closure(\Illuminate\Contracts\Foundation\Application): mixed)|null $factChecker */
             $this->app->bind(FactChecker::class, $factChecker);
         }
 
         if ($recentContentProvider = ($config['recent_content_provider'] ?? null)) {
+            /** @var class-string|(\Closure(\Illuminate\Contracts\Foundation\Application): mixed)|null $recentContentProvider */
             $this->app->bind(RecentContentProvider::class, $recentContentProvider);
         }
     }

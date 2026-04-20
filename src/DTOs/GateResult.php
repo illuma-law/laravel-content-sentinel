@@ -6,6 +6,9 @@ namespace IllumaLaw\ContentSentinel\DTOs;
 
 class GateResult
 {
+    /**
+     * @param  array<string, mixed>  $metadata
+     */
     public function __construct(
         public readonly string $gate,
         public readonly bool $passed,
