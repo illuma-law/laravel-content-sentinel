@@ -5,12 +5,13 @@ declare(strict_types=1);
 use IllumaLaw\ContentSentinel\Contracts\RecentContentProvider;
 use IllumaLaw\ContentSentinel\DTOs\SentinelPayload;
 use IllumaLaw\ContentSentinel\Gates\DuplicateContentGate;
+use Mockery\MockInterface;
 
 it('warns when similarity is above threshold', function () {
     $existingContent = 'This is a very unique content that should be caught.';
     $newContent = 'This is very unique content that should be caught.';
 
-    /** @var RecentContentProvider&\Mockery\MockInterface $provider */
+    /** @var RecentContentProvider&MockInterface $provider */
     $provider = Mockery::mock(RecentContentProvider::class, [
         'getRecentContent' => [$existingContent],
     ]);
@@ -30,7 +31,7 @@ it('passes when similarity is below threshold', function () {
     $existingContent = 'Completely different topic about law.';
     $newContent = 'Something else entirely about marketing.';
 
-    /** @var RecentContentProvider&\Mockery\MockInterface $provider */
+    /** @var RecentContentProvider&MockInterface $provider */
     $provider = Mockery::mock(RecentContentProvider::class, [
         'getRecentContent' => [$existingContent],
     ]);

@@ -6,13 +6,13 @@ namespace IllumaLaw\ContentSentinel\States;
 
 use A909M\FilamentStateFusion\Concerns\StateFusionInfo;
 use A909M\FilamentStateFusion\Contracts\HasFilamentStateFusion;
-use IllumaLaw\ContentSentinel\States\Concerns\ReceivesOptionalStateConfig;
 use BackedEnum;
 use Filament\Support\Contracts\HasColor;
 use Filament\Support\Contracts\HasDescription;
 use Filament\Support\Contracts\HasIcon;
 use Filament\Support\Contracts\HasLabel;
 use Filament\Support\Icons\Heroicon;
+use IllumaLaw\ContentSentinel\States\Concerns\ReceivesOptionalStateConfig;
 use Illuminate\Contracts\Support\Htmlable;
 use Spatie\ModelStates\State;
 use Spatie\ModelStates\StateConfig;
@@ -49,22 +49,22 @@ abstract class ModerationState extends State implements HasColor, HasDescription
     public function getIcon(): string|BackedEnum|Htmlable|null
     {
         return match ($this->getValue()) {
-            'pending'  => Heroicon::OutlinedClock,
+            'pending' => Heroicon::OutlinedClock,
             'approved' => Heroicon::OutlinedCheckCircle,
             'rejected' => Heroicon::OutlinedXCircle,
-            'flagged'  => Heroicon::OutlinedExclamationTriangle,
-            default    => null,
+            'flagged' => Heroicon::OutlinedExclamationTriangle,
+            default => null,
         };
     }
 
     public function getColor(): string|array|null
     {
         return match ($this->getValue()) {
-            'pending'  => 'gray',
+            'pending' => 'gray',
             'approved' => 'success',
             'rejected' => 'danger',
-            'flagged'  => 'warning',
-            default    => null,
+            'flagged' => 'warning',
+            default => null,
         };
     }
 }

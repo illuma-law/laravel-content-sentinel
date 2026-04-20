@@ -4,11 +4,11 @@ declare(strict_types=1);
 
 namespace IllumaLaw\ContentSentinel;
 
+use IllumaLaw\ContentSentinel\Contracts\FactChecker;
+use IllumaLaw\ContentSentinel\Contracts\RecentContentProvider;
 use Illuminate\Contracts\Config\Repository;
 use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Pipeline\Pipeline;
-use IllumaLaw\ContentSentinel\Contracts\FactChecker;
-use IllumaLaw\ContentSentinel\Contracts\RecentContentProvider;
 use Spatie\LaravelPackageTools\Package;
 use Spatie\LaravelPackageTools\PackageServiceProvider;
 
@@ -49,12 +49,12 @@ class ContentSentinelServiceProvider extends PackageServiceProvider
         $config = (array) $configRepository->get('content-sentinel', []);
 
         if ($factChecker = ($config['fact_checker'] ?? null)) {
-            /** @var class-string|(\Closure(\Illuminate\Contracts\Foundation\Application): mixed)|null $factChecker */
+            /** @var class-string|(\Closure(Application): mixed)|null $factChecker */
             $this->app->bind(FactChecker::class, $factChecker);
         }
 
         if ($recentContentProvider = ($config['recent_content_provider'] ?? null)) {
-            /** @var class-string|(\Closure(\Illuminate\Contracts\Foundation\Application): mixed)|null $recentContentProvider */
+            /** @var class-string|(\Closure(Application): mixed)|null $recentContentProvider */
             $this->app->bind(RecentContentProvider::class, $recentContentProvider);
         }
     }

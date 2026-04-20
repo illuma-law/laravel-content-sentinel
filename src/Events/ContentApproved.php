@@ -4,6 +4,4 @@ declare(strict_types=1);
 
 namespace IllumaLaw\ContentSentinel\Events;
 
-final class ContentApproved extends ContentModerated
-{
-}
+final class ContentApproved extends ContentModerated {}

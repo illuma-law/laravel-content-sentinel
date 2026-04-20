@@ -5,9 +5,10 @@ declare(strict_types=1);
 use IllumaLaw\ContentSentinel\Contracts\FactChecker;
 use IllumaLaw\ContentSentinel\DTOs\SentinelPayload;
 use IllumaLaw\ContentSentinel\Gates\HallucinationGate;
+use Mockery\MockInterface;
 
 it('warns when claims cannot be verified', function () {
-    /** @var FactChecker&\Mockery\MockInterface $factChecker */
+    /** @var FactChecker&MockInterface $factChecker */
     $factChecker = Mockery::mock(FactChecker::class, [
         'verifyClaim' => false,
     ]);
@@ -28,7 +29,7 @@ it('warns when claims cannot be verified', function () {
 });
 
 it('passes when all claims are verified', function () {
-    /** @var FactChecker&\Mockery\MockInterface $factChecker */
+    /** @var FactChecker&MockInterface $factChecker */
     $factChecker = Mockery::mock(FactChecker::class, [
         'verifyClaim' => true,
     ]);
@@ -47,7 +48,7 @@ it('passes when all claims are verified', function () {
 });
 
 it('skips when no claims are present', function () {
-    /** @var FactChecker&\Mockery\MockInterface $factChecker */
+    /** @var FactChecker&MockInterface $factChecker */
     $factChecker = Mockery::mock(FactChecker::class);
     $payload = new SentinelPayload(content: 'test');
 
