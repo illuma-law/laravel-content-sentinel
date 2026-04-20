@@ -9,8 +9,11 @@ use IllumaLaw\ContentSentinel\Gates\DuplicateContentGate;
 it('warns when similarity is above threshold', function () {
     $existingContent = 'This is a very unique content that should be caught.';
     $newContent = 'This is very unique content that should be caught.';
-    $provider = Mockery::mock(RecentContentProvider::class);
-    $provider->shouldReceive('getRecentContent')->andReturn([$existingContent]);
+
+    /** @var RecentContentProvider&\Mockery\MockInterface $provider */
+    $provider = Mockery::mock(RecentContentProvider::class, [
+        'getRecentContent' => [$existingContent],
+    ]);
 
     $payload = new SentinelPayload(content: $newContent);
 
@@ -27,8 +30,10 @@ it('passes when similarity is below threshold', function () {
     $existingContent = 'Completely different topic about law.';
     $newContent = 'Something else entirely about marketing.';
 
-    $provider = Mockery::mock(RecentContentProvider::class);
-    $provider->shouldReceive('getRecentContent')->andReturn([$existingContent]);
+    /** @var RecentContentProvider&\Mockery\MockInterface $provider */
+    $provider = Mockery::mock(RecentContentProvider::class, [
+        'getRecentContent' => [$existingContent],
+    ]);
 
     $payload = new SentinelPayload(content: $newContent);
 

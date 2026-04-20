@@ -6,6 +6,9 @@ namespace IllumaLaw\ContentSentinel;
 
 use IllumaLaw\ContentSentinel\DTOs\SafeguardResult;
 use IllumaLaw\ContentSentinel\DTOs\SentinelPayload;
+use IllumaLaw\ContentSentinel\Events\ContentApproved;
+use IllumaLaw\ContentSentinel\Events\ContentFlagged;
+use IllumaLaw\ContentSentinel\Events\ContentRejected;
 use Illuminate\Pipeline\Pipeline;
 
 class ContentSentinel
@@ -34,6 +37,27 @@ class ContentSentinel
 
         assert($resultPayload instanceof SentinelPayload);
 
-        return $resultPayload->toSafeguardResult();
+        $result = $resultPayload->toSafeguardResult();
+
+        $this->dispatchEvents($payload, $result);
+
+        return $result;
+    }
+
+    private function dispatchEvents(SentinelPayload $payload, SafeguardResult $result): void
+    {
+        if ($result->hasBlocks()) {
+            ContentRejected::dispatch($payload, $result);
+
+            return;
+        }
+
+        if ($result->hasWarnings()) {
+            ContentFlagged::dispatch($payload, $result);
+
+            return;
+        }
+
+        ContentApproved::dispatch($payload, $result);
     }
 }

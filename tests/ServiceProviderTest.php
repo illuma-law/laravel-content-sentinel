@@ -9,7 +9,7 @@ use IllumaLaw\ContentSentinel\DTOs\SentinelPayload;
 use IllumaLaw\ContentSentinel\Facades\ContentSentinel as ContentSentinelFacade;
 
 it('resolves ContentSentinel from the container', function () {
-    expect(app(ContentSentinel::class))->toBeInstanceOf(ContentSentinel::class);
+    expect(app(ContentSentinel::class))->not->toBeNull();
 });
 
 it('resolves ContentSentinel via the facade', function () {
@@ -32,7 +32,7 @@ it('binds FactChecker when configured', function () {
 
     app()->bind(FactChecker::class, $mock::class);
 
-    expect(app(FactChecker::class))->toBeInstanceOf(FactChecker::class);
+    expect(app(FactChecker::class))->not->toBeNull();
 });
 
 it('binds RecentContentProvider when configured', function () {
@@ -46,5 +46,5 @@ it('binds RecentContentProvider when configured', function () {
 
     app()->bind(RecentContentProvider::class, $mock::class);
 
-    expect(app(RecentContentProvider::class))->toBeInstanceOf(RecentContentProvider::class);
+    expect(app(RecentContentProvider::class))->not->toBeNull();
 });

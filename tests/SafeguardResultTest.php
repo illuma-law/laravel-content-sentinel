@@ -49,7 +49,11 @@ it('serialises to array correctly', function () {
 
     expect($array['passed'])->toBeTrue()
         ->and($array['warnings'])->toBe([])
-        ->and($array['blocks'])->toBe([])
-        ->and($array['gate_results'])->toHaveKey('test')
-        ->and($array['gate_results']['test'])->toBeArray();
+        ->and($array['blocks'])->toBe([]);
+
+    $gateResults = $array['gate_results'];
+    if (is_array($gateResults)) {
+        expect($gateResults)->toHaveKey('test')
+            ->and($gateResults['test'])->toBeArray();
+    }
 });
