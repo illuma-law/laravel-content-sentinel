@@ -17,9 +17,6 @@ use Illuminate\Contracts\Support\Htmlable;
 use Spatie\ModelStates\State;
 use Spatie\ModelStates\StateConfig;
 
-/**
- * Standard content moderation state.
- */
 abstract class ModerationState extends State implements HasColor, HasDescription, HasFilamentStateFusion, HasIcon, HasLabel
 {
     use ReceivesOptionalStateConfig;
@@ -49,22 +46,22 @@ abstract class ModerationState extends State implements HasColor, HasDescription
     public function getIcon(): string|BackedEnum|Htmlable|null
     {
         return match ($this->getValue()) {
-            'pending' => Heroicon::OutlinedClock,
+            'pending'  => Heroicon::OutlinedClock,
             'approved' => Heroicon::OutlinedCheckCircle,
             'rejected' => Heroicon::OutlinedXCircle,
-            'flagged' => Heroicon::OutlinedExclamationTriangle,
-            default => null,
+            'flagged'  => Heroicon::OutlinedExclamationTriangle,
+            default    => null,
         };
     }
 
     public function getColor(): string|array|null
     {
         return match ($this->getValue()) {
-            'pending' => 'gray',
+            'pending'  => 'gray',
             'approved' => 'success',
             'rejected' => 'danger',
-            'flagged' => 'warning',
-            default => null,
+            'flagged'  => 'warning',
+            default    => null,
         };
     }
 }

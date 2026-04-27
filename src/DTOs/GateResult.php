@@ -33,10 +33,10 @@ class GateResult
     public function toArray(): array
     {
         return [
-            'gate' => $this->gate,
-            'passed' => $this->passed,
+            'gate'     => $this->gate,
+            'passed'   => $this->passed,
             'severity' => $this->severity,
-            'message' => $this->message,
+            'message'  => $this->message,
             'metadata' => $this->metadata,
         ];
     }

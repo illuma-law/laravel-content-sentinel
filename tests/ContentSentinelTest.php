@@ -14,7 +14,7 @@ it('runs the full pipeline', function () {
             ProhibitedPhrasesGate::class,
             BrandVoiceGate::class,
         ],
-        'prohibited_phrases' => ['guaranteed outcome'],
+        'prohibited_phrases'    => ['guaranteed outcome'],
         'brand_forbidden_words' => ['cheap'],
     ];
 

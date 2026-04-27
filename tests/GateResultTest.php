@@ -38,10 +38,10 @@ it('serialises to array correctly', function () {
     );
 
     expect($result->toArray())->toBe([
-        'gate' => 'test_gate',
-        'passed' => true,
+        'gate'     => 'test_gate',
+        'passed'   => true,
         'severity' => 'info',
-        'message' => 'All good.',
+        'message'  => 'All good.',
         'metadata' => ['key' => 'value'],
     ]);
 });
