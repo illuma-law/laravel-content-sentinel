@@ -34,9 +34,9 @@ class SafeguardResult
     public function toArray(): array
     {
         return [
-            'passed'       => $this->passed,
-            'warnings'     => $this->warnings,
-            'blocks'       => $this->blocks,
+            'passed' => $this->passed,
+            'warnings' => $this->warnings,
+            'blocks' => $this->blocks,
             'gate_results' => array_map(fn (GateResult $gate): array => $gate->toArray(), $this->gateResults),
         ];
     }
